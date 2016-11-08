@@ -64,6 +64,7 @@ public class ReadExcel {
 	}
 
 	public static void writeXML(Map<String, String> banksInfoMap) throws Exception {
+
 		
 		System.out.println(banksInfoMap.size());
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
