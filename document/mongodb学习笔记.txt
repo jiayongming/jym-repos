@@ -1,0 +1,186 @@
+MongoDB
+一、基本概念
+	文档Document  --  行row 
+		_id 集合中唯一,默认为ObjectId对象,24位字符串
+	集合Collection -- 表Table
+	1.文档的键是字符串,大多情况下,可以使用任意UTF-8字符
+		键不可以含有\0(空字符串),表示结尾;.和$ 被保留 ;_开头的键被保留
+		同一个文档的键不可以重复
+		MongoDB严格区分类型和大小写
+	2.MongoDB的集合时无模式的
+		集合名不能是""和\0(空字符串),尽量不要使用$ 
+		system. 前缀是系统保留使用的,不允许使用
+		可以使用自己和来组织数据,大多驱动提供语法糖
+	3.数据库db database
+		不可以使用"" 空格 . $ / \ \0 
+		所有字符均应该小写,不超过64个字节
+		保留库名不可使用admin local config 
+		库名.集合名 就是集合的完全限定名(命名空间),一般小于100字节,不允许超过121字节
+	4.启动MongoDB
+		./mongod 
+		默认使用/data/db(C:data\db\)数据目录,应先创建并赋读写权限,否则无法启动
+		MongDB默认监听27017端口,并开启HTTP服务(端口比主端口大1000)
+		CTRL+C 可以停止MongoDB的运行
+	5.JavaScript shell
+		./mongo 自动连接至test
+		可以运行任何JavaScript程序,使用JavaScript标准库,定义函数,自动检测换行等
+		use dbname 选择库表 ; db 查看指向的库表
+		shell的CURD:
+			insert() 添加Document到Collection
+			db.blog.insert(post)
+			find() 返回collection all documents
+				args find({"title":"name"})
+			findOne() 返回only one document
+			update(arg0,arg1) arg0 更新文档的限定条件
+							  arg1 新的文档
+			remove() 无参会永久删除集合的所有文档,可以给与限定参数
+			quit 退出shell
+			db.help() 库表级别的命令帮助
+			db.foo.help() 集合级别的命令帮助
+			技巧:输入时不输入括号可以查看相应的JavaScript源代码实现
+				 集合名和库表属性重名时使用db.getCollection("version") 访问集合
+二、Document CURD
+	单条:db.test.insert({"bar":"bar","_id":"myID"})
+	批量(同一个TCP-IP请求):
+	remove() 永久删除,不可撤销,不可恢复,不删索引,不删集合
+	save() 插入(给_id)和更新
+	update(arg0,arg1) 
+		upsert 创建或者更新,update时给第三个参数true
+		mupdate(multi) 默认更新一个文档,update时给第四个参数true更新多个
+	$set:value 指定键的值,不存在则创建,存在则更新
+	$unset:value 删除指定键
+	$inc:value 存在则增加,不存在则新建
+	$push:向数组中添加或新建
+	$addToSet:不在数组中就添加,防止重复
+		$each:添加多个不同的值
+	{ $pop:{key:-1} } 头部删除(数组相当于队列或者栈)
+	$pull 删除所有符合条件的部分
+	$ 定位符,只定位第一个匹配元素
+	findAndModify()
+三、查询find()
+	find() 第一个参数是查询条件,不写即默认为{} 
+		   第二个参数是指定结果出现的键 "1":1 返回 "2":0 不返回
+		   $lt $lte $gt $gte $ne分别对应<  <=  >  >=  =！
+		   db.test.find({"age":{"$get":18,"$lte":30}})
+		   $in $nin $or $not $mod(查询结果mod第一个值等于第二个值得结果返回)
+		   "$exists":true 存在
+		   $all 数组含多元素,$size 指定长度
+		   $Slice 返回数组的一个子集合
+		   $where 返回属性值相同的文档,true 返回结果,false 不返回结果
+		   var cursor = db.test.find(); 获取游标
+				cursor.hasNext() 是否还有下一个
+				cursor.next() 下一个元素
+	limit(n) 至多返回n条结果
+	skip(n) 忽略前n个结果
+	sort({"a":1,"b":-1}) 1代表升序,-1代表降序 
+		排序规则(小到大)-->最小值、null、数字、字符串、对象/文档、数组、二进制数据
+			对象ID、布尔、日期、时间戳、正则表达式、最大值
+四、索引
+	ensureIndex({ :1 or -1},{"name":"指定索引name","unique":true,"background":true后台执行}) 
+		每个集合默认最大索引数量为64个,默认会阻塞操作
+		{ :2d} 地理空间索引 $near 查询
+	explain() 返回查询使用的相关信息
+	hint({ }) 强制使用某个索引
+	dropIndexes({ }) 删除索引
+五、聚合工具
+	count() 返回文档的数量
+	distinct 返回给定键的所有不同的值,指定集合和键
+		db.runCommand({"distinct":"people","key":"age"})
+	group   "ns":分组集合  "key":分组依据  "initial":{"time":0} 初始时间
+			"$reduce":function(doc,prev){
+				doc 当前文档
+				prev 本组当前的结果
+			}
+			"finalize":function(prev){
+				prev.tags 文档中值最大的标签
+			}
+			"$keyf":function(x){return x.category.toLowerCase();} 函数作为建使用
+	MapReduce 映射(map) 洗牌(shuffle) 化简归纳(reduce) 比其他聚合慢
+		map = function(){
+			for (var i in this){
+				......
+				发出emit(arg0,arg1);
+			}
+		}
+		reduce = function(key,emits){
+			.......
+		}
+六、命令参考
+	db.listCommand() 
+	db.createCollection({ }) 创建固定集合
+	GridFS 是一种MongoDB存储大二进制数据的机制		
+	DBRef 数据库引用,内嵌文档 $ref $id
+	mongod --help启动命令 
+		--dbpath 指定数据目录 default /data/db/
+			mongod.lock 防止其他进程使用
+		--port 监听端口 default 27017
+		--fork 守护进程启动
+		--logpath 日志输出路径,默认到命令行
+		--config 指定配置文件
+	db.shutdownServer(); 停止MongoDB服务,必须在admin库下执行
+七、集群步骤
+	cd /opt/software/mongodb-x86_64-3.2.3/
+	1.创建相关日志,守护进程启动
+	2.启动副本集
+		shard1===>
+		./bin/mongod -f ./cluster/config/27018.conf
+		./bin/mongod -f ./cluster/config/27019.conf
+		./bin/mongod -f ./cluster/config/27020.conf
+
+		./bin/mongo --port 27018
+		use admin
+		var config = {
+			_id:"shard1",
+			members:[
+				{_id:0,host:"192.168.1.192:27018"},
+				{_id:1,host:"192.168.1.192:27019"},
+				{_id:2,host:"192.168.1.192:27020"}]
+		}
+		rs.initiate(config);	启动副本集
+		rs.status();	查看副本集状态
+	
+		shard2===>
+		./bin/mongod -f ./cluster/config/27021.conf
+		./bin/mongod -f ./cluster/config/27022.conf
+		./bin/mongod -f ./cluster/config/27023.conf
+
+		./bin/mongo --port 27021
+		use admin
+		var config = {
+			_id:"shard2",
+			members:[
+				{_id:0,host:"192.168.1.192:27021"},
+				{_id:1,host:"192.168.1.192:27022"},
+				{_id:2,host:"192.168.1.192:27023"}]
+		}
+		rs.initiate(config);	启动副本集
+		rs.status();	查看副本集状态
+	
+	启动配置服务器configServers
+	./bin/mongod -f ./cluster/config/37000.conf
+	./bin/mongod -f ./cluster/config/37001.conf
+	./bin/mongod -f ./cluster/config/37002.conf
+	
+	启动路由服务器
+	./bin/mongos -f ./cluster/config/47000.conf
+	
+	连接路由服务器
+		./bin/mongo --port 47000
+		use admin
+		sh.addShard("shard1/192.168.1.192:27018");
+		sh.addShard("shard2/192.168.1.192:27021");
+		//表示对_id 做分片处理
+		db.runCommand({"shardcollection":"haha.wahaha","key":{"_id":1}})
+		db.runCommand({"enablesharding":"haha"})
+		sh.enableSharding(database)
+		sh.shardCollection("haha.wahaha", {"_id" : 1});
+		sh.shardCollection("haha.wahaha", {"_id": "hashed" });
+
+		插入测试文档
+		for(var i=10000; i<100000; i++){
+			db.wahaha.insert({name:"haha",email:"wahaha"+i })
+		}
+		查看状态：db.wahaha.stats();
+		db.printShardingStatus();
+	
+	
