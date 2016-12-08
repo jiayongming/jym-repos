@@ -9,9 +9,14 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -27,14 +32,14 @@ import com.google.common.collect.Sets;
 @SuppressWarnings("unused")
 public class WriteExcel {
 	
-	private static String path = "D:\\eclipse20150831\\workspace\\excelXML\\resources\\source.sql"; 
+	private static String path = "D:\\Program Files\\jym-github\\excelPoi\\src\\main\\resources\\source.sql"; 
 	private static File filename = new File(path); 
 	@Test
 	public void main() {
 		try {
 			Map<String, String> SQLMap = Maps.newLinkedHashMapWithExpectedSize(256);
 			
-			InputStream inp = new FileInputStream("D:\\eclipse20150831\\workspace\\excelXML\\resources\\userMedal.xlsx");
+			InputStream inp = new FileInputStream("D:\\Program Files\\jym-github\\excelPoi\\src\\main\\resources\\guiyang_batchOpen_501.xlsx");
 			Workbook wb = WorkbookFactory.create(inp);
 			int numberOfSheets = wb.getNumberOfSheets();
 			System.out.println("工作表个数为：" + numberOfSheets);
@@ -47,30 +52,30 @@ public class WriteExcel {
 			System.out.println("获得总行数14572:" + rowNum);
 
 			/*writeTxtFile("USE wealth ;") ;*/
-			int count = 0 ;
-			List<Long> fs1 = Lists.newArrayListWithCapacity(15000);
-			
+			Map<String, String> bankEncrypt = Maps.newLinkedHashMapWithExpectedSize(600);
 			for (int i = 1; i <= rowNum; i++) {
-				double numericCellValue = sheet.getRow(i).getCell(0).getNumericCellValue(); // 第一列单元格的值
-				Long valueOf = (long)numericCellValue ;
-				
-				fs1.add(valueOf) ;
-				
+				double bank8 = sheet.getRow(i).getCell(7).getNumericCellValue(); // 第八列单元格的值
+				long bank_int8 = (long)bank8 ;
+				double bank9 = sheet.getRow(i).getCell(8).getNumericCellValue(); // 第八列单元格的值
+				long bank_int9 = (long)bank9 ;
+				String str8 = String.valueOf(bank_int8);
+				String str9 = String.valueOf(bank_int9);
+				String str = str8+str9;
+				String encrypt = DESUtil.encrypt(str.getBytes());
+				bankEncrypt.put(str, encrypt) ;
 			}
-			
+
 /*			HashSet<Integer> newHashSet = Sets.newHashSet(fs);
 			fs = Lists.newArrayList(newHashSet);*/
-			
-			StringBuilder sb = new StringBuilder() ;
-			String str = "SELECT * FROM medal WHERE `friendId` in ( ";
-			sb.append(str) ;
-			for (Long long1 : fs1) {
-				sb.append(long1) ;
-				sb.append(",") ;
+			Set<Entry<String, String>> entrySet = bankEncrypt.entrySet();
+			for (Entry<String, String> entry : entrySet) {
+				
+				writeTxtFile(entry.getKey()+","+entry.getValue()) ;
+				
 			}
-			sb.append(" );") ;
 			
-			writeTxtFile(sb.toString().replace(", )", " )")) ;
+			
+
 /*			String str = "INSERT into user_medal values ({-1},{0},{1},{2},{3},{4},{5},{6},{7},{8},{9} ) ;";
 			sb.append(str) ;
 
@@ -108,9 +113,6 @@ public class WriteExcel {
 				
 				writeTxtFile(filein) ;
 			}*/
-			
-			
-			System.out.println("生成sql成功,条数"+count);
 
 		} catch (Exception e) {
 			e.printStackTrace();
