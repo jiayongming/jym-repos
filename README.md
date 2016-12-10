@@ -1,2 +1,2 @@
 # jym-repos
-follow me !
+Hi , follow me !
