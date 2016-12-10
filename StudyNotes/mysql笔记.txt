@@ -1,0 +1,119 @@
+一、Mysql数据库的基本连接数据
+	配置步骤:
+	1.找到my-small.ini配置文件,将其重命名为 my.ini,在[client]与[mysqld]下均添加一行:default-character-set = utf-8
+	2.安装 MySQL服务,打开Windows命令提示符,执行命令:mysqld--install MySQL --defaults-file="my.ini" 提示"Service successfully installed."表示成功;
+	MySQL服务的启动、停止与卸载,在 Windows命令提示符下运行:
+	启动: net start MySQL
+	停止: net stop MySQL
+	卸载: sc delete MySQL
+	修改密码:mysqladmin -u root -p password 新密码
+	JDBC连接
+	driverName-->com.mysql.jdbc.Driver
+	url-->jdbc:mysql://localhost:3306/test(库表名)?Unicode=true&amp;characterEncoding=utf8
+	username-->root
+	password-->admin
+二、Mysql的增删改查操作
+	1.mysql常用数据类型
+		整数类型(只代表显示宽度，unsigned关键字最大值可以翻倍int unsigned):
+			tinyint(1)、smallint(2)、mediumint(3)、int(4)、bigint(8)、ID
+		浮点数:float(m,d)、double(m,d)、real、decimal( T(总长度),K(小数位) )
+		
+		字符:char(255)、varchar、text/longtext(clob Oracle)
+		文本:tinytext、text(不能有默认值)、mediumtext、longtext
+		布尔：bool/boolean
+		日期和时间: date(年月日)、time、datetime、timestamp(自动更新修改时间)、year
+		二进制(可用来存储图片、音乐等): tinyblob、blob、mediumblob、longblob
+		数据类型的属性：
+		NULL	数据列可包含NULL值
+		NOT NULL	数据列不允许包含NULL值
+		DEFAULT	默认值
+		PRIMARY KEY	主键
+		AUTO_INCREMENT	自动递增，适用于整数类型
+		UNSIGNED	无符号
+		CHARACTER SET name	指定一个字符集
+	2.常见的约束类型
+		PRIMARY KEY：primary key，主键唯一标识一条对应的记录；
+		FOREIGN KEY：foreign key，外键与另一个表的主键进行关联；
+		NOT NULL：非空约束，标识该属性不能为空；
+		UNIQUE：unique，标识该属性是唯一的；
+		AUTO_INCREMENT：auto_increment，标识该属性自动增加；
+		DEFAULT：default，为该属性设置默认值。
+		auto_increment，自增
+	3.创建表
+	建库:create database samp_db character set utf-8;
+	查看已经创建了哪些数据库:show databases命令
+	删除数据库：drop database 数据库名
+	CREATE TABLE t_book(
+		id int primary key auto_increment,
+		bookName varchar(20),
+		author varchar(10),
+		price decimal(6,2),
+		bookTypeId int,
+		constraint 'fk' foreign key ('bookTypeId') references 't_bookType'('id')
+	);
+	4.修改表
+		插入一列:alter table 表名 add 列名 列数据类型 [after 插入位置];
+		修改列:alter table 表名 change 列名称 列新名称 新数据类型;
+		删除列:alter table students drop 列名称;
+		重命名students表为workmates: alter table students rename workmates;
+	5.删除表:DROP TABLE table_name;
+三、查询操作
+	1.查询所有字段:SELECT * FROM table_name;
+	2.查询指定的字段:SELECT id,stuName,age FROM table_name ;
+	3.where字句:SELECT *FROM table_name WHERE name = '年级' ;
+	4.(not)in关键字查询
+	5.(not)BETWEEN...AND 范围查询
+	6.(not)LIKE关键字与模糊查询
+	7.空值查询IS (not)NULL
+	8.多条件查询AND/OR关键字
+	9.DISTINCT关键字去重查询
+	10.GROUP BY 分组查询，一般与 GROUP_CONCAT()、COUNT()等聚合函数一起使用。
+	11.LIMIT关键字分页查询
+		SELECT 字段1,字段2...FROM 表名 LIMIT 初始位置，记录数；
+	12.结果排序ASC(默认升序)/DESC(降序)
+	13.聚合函数查询
+		COUNT()函数统计记录的条数,SELECT COUNT(*) AS total FROM t_grade;
+		SUM()函数是求和函数;AVG()函数是求平均值的函数
+		MAX()函数是求最大值的函数;MIN()函数是求最小值的函数
+	14.多表连接查询
+		14.1 内连接查询–广义笛卡尔积连接
+			广义迪卡儿积没有限定语句，结果会产生 N*M 条记录
+			SELECT * FROM t_book,t_bookType;
+		14.2 内连接查询–条件限制
+			SELECT tb.id, tb.bookName,tb.price,tb.author,tby.bookTypeName FROM
+			t_book tb,t_bookType tby WHERE tb.bookTypeId=tby.id;
+		14.3外连接查询(左外和右外)
+			SELECT 属性名列表 FROM 表名1 LEFT|RIGHT JOIN 表名2 ON 表名1.属性名1=表名2.属性名2；
+	15.子查询
+		(not)in关键字、比较运算符
+		关键字Exists假如子查询查询到记录，则进行外层查询，否则不执行外层查询
+		SELECT * FROM t_book WHERE EXISTS (SELECT * FROM
+		t_booktypeWHERE id <3);
+		ANY关键字表示满足其中任一条件，ALL表示满足所有条件
+四、modify操作
+	1.插入操作(支持多值插入)
+		INSERT INTO 表名 VALUES(值1，值2，值3，...，值n);
+		INSERT INTO 表名 [(属性列表)] VALUES(取值列表 1)，(取值列表 2)...， (取值列表 n)；
+	2.更新操作(支持多值更新)
+		UPDATE 表名 SET 属性名 1=取值 1，属性名 2=取值 2，...，属性名 n=取值 n WHERE 条件表达式；	
+		UPDATE t_book SET bookName='读者' WHERE bookName LIKE '%京华%';
+	3.删除数据
+		DELETE FROM 表名 [WHERE 条件表达式];
+五、常用数据库函数
+	1.时间函数
+		CURDATE() 返回当前日期； 
+		CURTIME() 返回当前时间；
+		MONTH(d) 返回日期 d中的月份值，范围是 1~12。
+	2.字符串函数
+		CHAR_LENGTH(s)计算字符串 s的字符数；
+		UPPER(s)把所有字母变成大写字母；
+		LOWER(s)把所有字母变成小写字母。
+		UUID()获取随机的UUID值
+	3.数学函数
+		ABS(x)求绝对值
+		SQRT(x)求平方根
+		MOD(x,y)求余
+六、其他对象
+			
+	
+	
