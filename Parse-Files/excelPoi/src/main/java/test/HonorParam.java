@@ -1,10 +1,6 @@
 package test;
 
-import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
-
 import java.io.Serializable;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * @author 贾永明 优选理财列表参数

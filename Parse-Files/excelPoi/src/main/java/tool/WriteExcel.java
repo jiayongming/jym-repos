@@ -1,33 +1,15 @@
 package tool;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.io.RandomAccessFile;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.usermodel.Cell;
+import com.google.common.collect.Maps;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.junit.Test;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
+import java.io.*;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 @SuppressWarnings("unused")
 public class WriteExcel {
@@ -61,8 +43,6 @@ public class WriteExcel {
 				String str8 = String.valueOf(bank_int8);
 				String str9 = String.valueOf(bank_int9);
 				String str = str8+str9;
-				String encrypt = DESUtil.encrypt(str.getBytes());
-				bankEncrypt.put(str, encrypt) ;
 			}
 
 /*			HashSet<Integer> newHashSet = Sets.newHashSet(fs);
