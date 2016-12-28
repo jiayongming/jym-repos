@@ -19,11 +19,11 @@ import lombok.SneakyThrows;
 public class DomCreateXML {
 	@Test @SneakyThrows
 	public void createXML(){
-		//  ÊµÀı»¯Ò»¸öxml´´½¨¹¤³§Àà
+		//  å®ä¾‹åŒ–ä¸€ä¸ªxmlåˆ›å»ºå·¥å‚ç±»
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		//½âÎöxmlÎÄ¼şµÄ½âÎöÆ÷
+		//è§£æxmlæ–‡ä»¶çš„è§£æå™¨
 		DocumentBuilder db = dbf.newDocumentBuilder();
-		//»ñµÃdocument¶ÔÏó£¬µÈ¼ÛÓÚxmlÎÄ¼ş
+		//è·å¾—documentå¯¹è±¡ï¼Œç­‰ä»·äºxmlæ–‡ä»¶
 		Document document = db.newDocument();
 
 		Element persons = document.createElement("persons");
@@ -51,17 +51,17 @@ public class DomCreateXML {
 		persons.appendChild(person);
 		persons.appendChild(person1);
 		document.appendChild(persons);
-		//´´½¨xmlÎÄ¼şµÄ¹¤³§Àà
+		//åˆ›å»ºxmlæ–‡ä»¶çš„å·¥å‚ç±»
 		TransformerFactory tfs = TransformerFactory.newInstance();
-		//É¾³ıxmlÎÄ¼şµÄtransformerÀà
+		//åˆ é™¤xmlæ–‡ä»¶çš„transformerç±»
 		Transformer ts = tfs.newTransformer();
-		//ÉèÖÃxmlÎÄ¼şµÄ±àÂë¸ñÊ½
+		//è®¾ç½®xmlæ–‡ä»¶çš„ç¼–ç æ ¼å¼
 		ts.setOutputProperty(OutputKeys.ENCODING,"utf-8");
-		// Êä³öµÄÊ±ºò»»ĞĞ
+		// è¾“å‡ºçš„æ—¶å€™æ¢è¡Œ
 		ts.setOutputProperty(OutputKeys.INDENT,"yes");
-		//xmlÎÄ¼şµÄÔ­Ê¼×ÊÔ´
+		//xmlæ–‡ä»¶çš„åŸå§‹èµ„æº
 		DOMSource ds = new DOMSource(document);
-		//ÎÄ¼şÊä³ö¶ÔÏó
+		//æ–‡ä»¶è¾“å‡ºå¯¹è±¡
 		StreamResult sr = new StreamResult(new FileOutputStream("e:/persons.xml"));
 		ts.transform(ds, sr);
 
