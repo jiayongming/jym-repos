@@ -1,17 +1,16 @@
 package com.sax;
 
-import java.io.FileInputStream;
-import java.util.List;
+import com.model.Person;
+import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j;
+import org.junit.Test;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import java.io.FileInputStream;
+import java.util.List;
 
-import org.junit.Test;
-
-import com.model.Person;
-
-import lombok.SneakyThrows;
-
+@Log4j
 public class SaxRead {
 	@Test @SneakyThrows
 	public void test() {
@@ -20,12 +19,9 @@ public class SaxRead {
 		FileInputStream fis = new FileInputStream("e:/persons.xml");
 		PersonHandler handler = new PersonHandler();
 		parser.parse(fis, handler);
-//		handler.print();
 		List<Person> list = PersonHandler.list;
-//		System.out.println("----------------------");
-//		System.out.println(list.size());
 		for(Person p :list){
-			System.out.println(p);
+			log.info(p);
 		}
 	}
 }

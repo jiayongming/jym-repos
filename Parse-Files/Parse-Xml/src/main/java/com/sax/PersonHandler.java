@@ -1,15 +1,16 @@
 package com.sax;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.model.Person;
+import lombok.extern.log4j.Log4j;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.model.Person;
+import java.util.ArrayList;
+import java.util.List;
 
-public class PersonHandler  extends DefaultHandler{
+@Log4j
+public class PersonHandler extends DefaultHandler{
 	public static List<Person> list = null;
 	private Person person;
 	private String tagName;
@@ -17,7 +18,7 @@ public class PersonHandler  extends DefaultHandler{
 	@Override
 	public void characters(char[] ch, int start, int length)
 			throws SAXException {
-		System.out.println(tagName+"------");
+		log.info(tagName+"------");
 		String str = new String(ch,start,length);
 		if("name".equals(tagName)){
 			person.setName(str);
@@ -25,12 +26,12 @@ public class PersonHandler  extends DefaultHandler{
 		if("age".equals(tagName)){
 			person.setAge(Integer.parseInt(str));
 		}
-		System.out.println("遇到文本节点"+str);
+		log.info("遇到文本节点"+str);
 	}
 	//当解析xml文件结束的时候触发
 	@Override
 	public void endDocument() throws SAXException {
-		System.out.println("文件解析结束");
+		log.info("文件解析结束");
 		
 	}
 	
@@ -48,7 +49,6 @@ public class PersonHandler  extends DefaultHandler{
 			list.add(person);
 		}
 		tagName="";
-//		System.out.println("当前标签解析结束"+uri+"---->"+ localName+"--->"+ qName);
 	}
 	/**
 	 *   文档开始被解析的时候执行,
@@ -56,7 +56,6 @@ public class PersonHandler  extends DefaultHandler{
 	 */
 	@Override
 	public void startDocument() throws SAXException {
-//		System.out.println("开始解析文档");
 		list = new ArrayList<Person>();
 	}
 	/**当解析xml文件时遇到开始标签触发,一般拿到标签的属性，做出相应的处理
@@ -65,8 +64,6 @@ public class PersonHandler  extends DefaultHandler{
 	@Override
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
-//		System.out.println("开始解析标签"+uri+"-->"+ qName+"--->"+attributes);
-//		System.out.println(tagName+"----tagName-----"+qName);
 		tagName= qName;
 		if("person".equals(qName)){
 			person = new Person();
@@ -75,9 +72,8 @@ public class PersonHandler  extends DefaultHandler{
 		}
 		
 		for(int i = 0; i < attributes.getLength();i++){
-			System.out.println("-------------"+attributes.getQName(i));
+			log.info("-------------"+attributes.getQName(i));
 		}
-//		System.out.println(person+"----");
 	}
 	
 }
