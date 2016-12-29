@@ -13,14 +13,14 @@ public class DubboUseage {
 		ApplicationContext ctx=new ClassPathXmlApplicationContext("/config/applicationContext.xml");
 		//访问新版本
 		IDemoService demoService1=(IDemoService) ctx.getBean("demoService1");
-	    log.info(demoService1.methodInvoke());
+	    log.info("new version:" + demoService1.methodInvoke());
 	    //访问old版本
 	    IDemoService demoService2=(IDemoService) ctx.getBean("demoService2");
-		log.info(demoService2.methodInvoke());
+		log.info("old version:" + demoService2.methodInvoke());
 	    
 	    //访问随机版本
 	    IDemoService demoService3=(IDemoService) ctx.getBean("demoService3");
-		log.info(demoService3.methodInvoke());
+		log.info("new_or_old version:" + demoService3.methodInvoke());
 	    
 	}
 }
