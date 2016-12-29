@@ -1,6 +1,10 @@
 package com.dom;
 
-import java.io.FileOutputStream;
+import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j;
+import org.junit.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -9,13 +13,9 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.FileOutputStream;
 
-import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
-import lombok.SneakyThrows;
-
+@Log4j
 public class DomCreateXML {
 	@Test @SneakyThrows
 	public void createXML(){
