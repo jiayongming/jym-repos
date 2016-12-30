@@ -8,11 +8,11 @@ import com.dubbo.service.IDemoService;
 
 @Log4j
 public class DubboUseage {
-	//<dubbo:reference id="demoService"  interface="com.baizhi.service.IDemoService" protocol="dubbo" check="false" />
+	//<dubbo:reference id="demoService"  interface="com.dubbo.service.IDemoService" protocol="dubbo" check="false" />
 	public static void main(String[] args) throws IOException {
-		ApplicationContext ctx=new ClassPathXmlApplicationContext("/config/applicationContext.xml");
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("/config/applicationContext.xml");
 		//访问新版本
-		IDemoService demoService1=(IDemoService) ctx.getBean("demoService1");
+		IDemoService demoService1 = (IDemoService) ctx.getBean("demoService1");
 	    log.info("new version:" + demoService1.methodInvoke());
 	    //访问old版本
 	    IDemoService demoService2=(IDemoService) ctx.getBean("demoService2");
