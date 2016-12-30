@@ -13,7 +13,7 @@ import com.dubbo.service.IDemoService;
 @Log4j
 public class DubboUseage {
 	public static void main(String[] args) throws IOException {
-		ApplicationContext ctx=new ClassPathXmlApplicationContext("/config/applicationContext.xml");
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("/config/applicationContext.xml");
 		IDemoService demoService=(IDemoService) ctx.getBean("demoService");
 		
 		Computer res=demoService.methodInvoke("zhangsan", new CallbackListener() {
