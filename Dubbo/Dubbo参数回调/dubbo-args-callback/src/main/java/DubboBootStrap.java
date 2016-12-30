@@ -8,7 +8,7 @@ import java.io.IOException;
 public class DubboBootStrap {
 
 	public static void main(String[] args) throws IOException {
-		ApplicationContext ctx=new ClassPathXmlApplicationContext("/config/applicationContext.xml");
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("/config/applicationContext.xml");
 
 		log.info("服务启动A.....") ;
 

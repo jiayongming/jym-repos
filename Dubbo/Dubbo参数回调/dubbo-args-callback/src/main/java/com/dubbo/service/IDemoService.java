@@ -4,5 +4,5 @@ import com.dubbo.entity.Computer;
 
 public interface IDemoService {
 
-	public Computer methodInvoke(String value,CallbackListener callbackListener);
+	Computer methodInvoke(String value,CallbackListener callbackListener);
 }

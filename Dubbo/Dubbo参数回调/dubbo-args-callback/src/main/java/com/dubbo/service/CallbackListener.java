@@ -5,5 +5,5 @@ import java.io.Serializable;
 import com.dubbo.entity.User;
 
 public interface CallbackListener extends Serializable{
-	public User callBack(User v);
+	User callBack(User v);
 }
