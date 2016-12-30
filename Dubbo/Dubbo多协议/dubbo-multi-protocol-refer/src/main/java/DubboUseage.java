@@ -11,9 +11,9 @@ import com.dubbo.service.IDemoService;
 public class DubboUseage {
 	//<dubbo:reference id="demoService"  interface="com.dubbo.service.IDemoService" protocol="dubbo" check="false" />
 	public static void main(String[] args) throws IOException {
-		ApplicationContext ctx=new ClassPathXmlApplicationContext("/config/applicationContext.xml");
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("/config/applicationContext.xml");
 		
-		IDemoService demoService=(IDemoService) ctx.getBean("demoService");
+		IDemoService demoService = (IDemoService) ctx.getBean("demoService");
 		//打印代理类型 底层dubbo使用NIO的RCP做远程调度  默认使用的是balancer 随机选择服务器 集群容错failover
 	   log.info(demoService.methodInvoke());
 		
