@@ -1,9 +1,8 @@
-import java.io.IOException;
-
-import lombok.Data;
 import lombok.extern.log4j.Log4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.io.IOException;
 
 @Log4j
 public class DubboBootStrap {
