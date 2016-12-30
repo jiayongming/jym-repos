@@ -10,8 +10,8 @@ import com.dubbo.service.IDemoService;
 @Log4j
 public class DubboUseage {
 	public static void main(String[] args) throws IOException {
-		ApplicationContext ctx=new ClassPathXmlApplicationContext("/config/applicationContext.xml");
-		IDemoService demoService=(IDemoService) ctx.getBean("demoService");
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("/config/applicationContext.xml");
+		IDemoService demoService = (IDemoService) ctx.getBean("demoService");
 		try {
 			while(true){
 				User user = demoService.methodInvoke(200, "jiayongming");
