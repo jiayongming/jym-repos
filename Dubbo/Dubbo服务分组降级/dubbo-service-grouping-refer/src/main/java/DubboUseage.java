@@ -8,7 +8,7 @@ import com.dubbo.service.IDemoService;
 
 @Log4j
 public class DubboUseage {
-	//<dubbo:reference id="demoService"  interface="com.dubbo.service.IDemoService" protocol="dubbo" check="false" />
+	//<dubbo:reference id="demoService" interface="com.dubbo.service.IDemoService" protocol="dubbo" check="false" />
 	public static void main(String[] args) throws IOException {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("/config/applicationContext.xml");
 		//访问新版本
