@@ -1,6 +1,8 @@
 package tool;
 
 import com.google.common.collect.Maps;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
@@ -14,14 +16,14 @@ import java.util.Set;
 @SuppressWarnings("unused")
 public class WriteExcel {
 	
-	private static String path = "D:\\Program Files\\jym-github\\excelPoi\\src\\main\\resources\\source.sql"; 
+	private static String path = "D:\\Program Files\\mysGithub\\Parse-Files\\parse-excel\\src\\main\\resources\\source.sql";
 	private static File filename = new File(path); 
 	@Test
 	public void main() {
 		try {
 			Map<String, String> SQLMap = Maps.newLinkedHashMapWithExpectedSize(256);
 			
-			InputStream inp = new FileInputStream("D:\\Program Files\\jym-github\\excelPoi\\src\\main\\resources\\guiyang_batchOpen_501.xlsx");
+			InputStream inp = new FileInputStream("D:\\Program Files\\mysGithub\\Parse-Files\\parse-excel\\src\\main\\resources\\2017 工作日历.xls");
 			Workbook wb = WorkbookFactory.create(inp);
 			int numberOfSheets = wb.getNumberOfSheets();
 			System.out.println("工作表个数为：" + numberOfSheets);
@@ -34,27 +36,90 @@ public class WriteExcel {
 			System.out.println("获得总行数14572:" + rowNum);
 
 			/*writeTxtFile("USE wealth ;") ;*/
-			Map<String, String> bankEncrypt = Maps.newLinkedHashMapWithExpectedSize(600);
-			for (int i = 1; i <= rowNum; i++) {
-				double bank8 = sheet.getRow(i).getCell(7).getNumericCellValue(); // 第八列单元格的值
+			Map<String, String> bankEncrypt = Maps.newLinkedHashMapWithExpectedSize(400) ;
+			for (int i = 1; i <= rowNum ; i++) {
+				final String key = sheet.getRow(i).getCell(1).getStringCellValue();
+				final String value = sheet.getRow(i).getCell(2).getStringCellValue();
+				if (value.equalsIgnoreCase("是")){
+					int add = 1 ;
+
+					while(true){
+						if (i+add <= rowNum){
+							final String stringCellValue = sheet.getRow(i+add).getCell(2).getStringCellValue();
+							if (stringCellValue.equalsIgnoreCase("是")){
+								bankEncrypt.put(key,sheet.getRow(i+add).getCell(1).getStringCellValue()) ;
+								break;
+							} else {
+								add ++ ;
+							}
+						} else {
+							bankEncrypt.put(key,"-1") ;
+							break;
+						}
+					}
+
+				} else if (value.equalsIgnoreCase("否")){
+					int add = 1 ;
+					outer : while (true){
+						if (i+add <= rowNum){
+							final String stringCellValue = sheet.getRow(i+add).getCell(2).getStringCellValue();
+							if (stringCellValue.equalsIgnoreCase("是")){
+								while(true){
+									if (i+add+1 <= rowNum){
+										final String stringCellValue1 = sheet.getRow(i+add+1).getCell(2).getStringCellValue();
+										if (stringCellValue1.equalsIgnoreCase("是")){
+											bankEncrypt.put(key,sheet.getRow(i+add+1).getCell(1).getStringCellValue()) ;
+											break outer ;
+										} else {
+											add ++ ;
+										}
+									} else {
+										bankEncrypt.put(key,"-1") ;
+										break outer;
+									}
+
+								}
+							} else {
+								add ++ ;
+							}
+						} else {
+							bankEncrypt.put(key,"-1") ;
+							break;
+						}
+					}
+				}
+/*				double bank8 = sheet.getRow(i).getCell(7).getNumericCellValue(); // 第八列单元格的值
 				long bank_int8 = (long)bank8 ;
 				double bank9 = sheet.getRow(i).getCell(8).getNumericCellValue(); // 第八列单元格的值
 				long bank_int9 = (long)bank9 ;
 				String str8 = String.valueOf(bank_int8);
 				String str9 = String.valueOf(bank_int9);
-				String str = str8+str9;
+				String str = str8+str9;*/
 			}
 
 /*			HashSet<Integer> newHashSet = Sets.newHashSet(fs);
 			fs = Lists.newArrayList(newHashSet);*/
+			String content = "<entry key=\"{0}\" value=\"{1}\" />" ;
+			Map<String, String> resultMap = Maps.newLinkedHashMapWithExpectedSize(400) ;
 			Set<Entry<String, String>> entrySet = bankEncrypt.entrySet();
 			for (Entry<String, String> entry : entrySet) {
-				
-				writeTxtFile(entry.getKey()+","+entry.getValue()) ;
-				
+				final String value = entry.getValue();
+
+				String replace = StringUtils.replace(content, "{0}", entry.getKey());
+				final String result = StringUtils.replace(replace, "{1}", entry.getValue());
+				writeTxtFile(result) ;
+
+
+
 			}
-			
-			
+/*
+			final Set<Entry<String, String>> entries = resultMap.entrySet();
+			for (Entry<String, String> entry : entries) {
+				String replace = StringUtils.replace(content, "{0}", entry.getKey());
+				final String result = StringUtils.replace(replace, "{1}", entry.getValue());
+				writeTxtFile(result) ;
+
+			}*/
 
 /*			String str = "INSERT into user_medal values ({-1},{0},{1},{2},{3},{4},{5},{6},{7},{8},{9} ) ;";
 			sb.append(str) ;
