@@ -1,5 +1,8 @@
 package com.commons.compare;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 public class VersionCompare {
 	/**
 	 * 比较版本号的大小,前者大则返回一个正数,后者大返回一个负数,相等则返回0

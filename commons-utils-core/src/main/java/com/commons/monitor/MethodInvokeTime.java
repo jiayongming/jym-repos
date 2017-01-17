@@ -1,9 +1,9 @@
 package com.commons.monitor;
 
+import lombok.extern.log4j.Log4j2;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.lang3.time.StopWatch;
-import org.apache.log4j.Logger;
 
 import java.util.Map;
 import java.util.Set;
@@ -14,9 +14,8 @@ import java.util.Set;
  * 日志标志为 invokeTimeMonitor 
  * Logger.getLogger("invokeTimeMonitor");
  */
+@Log4j2
 public class MethodInvokeTime implements MethodInterceptor {
-
-	private final static Logger LOG = Logger.getLogger("invokeTimeMonitor");
 
 	@Override
 	public Object invoke(MethodInvocation invocation) throws Throwable {
@@ -41,15 +40,15 @@ public class MethodInvokeTime implements MethodInterceptor {
 		} catch (Throwable e) {
 			// 监控的参数
 			Object[] objs = invocation.getArguments();
-			LOG.error( sb.toString() + this.getString(objs) + ")]：InvokeError.", e );
+			log.error( sb.toString() + this.getString(objs) + ")]：InvokeError.", e );
 			throw e;
 		}
 		
 		// 计时结束
 		clock.stop();
 		
-		if (LOG.isInfoEnabled()) {
-			LOG.info( sb.toString()+")]：InvokeTime(millisecond): " + clock.getTime() );
+		if (log.isInfoEnabled()) {
+			log.info( sb.toString()+")]：InvokeTime(millisecond): " + clock.getTime() );
 		}
 		return result;
 	}

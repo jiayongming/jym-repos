@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.util.Enumeration;
 import java.util.Properties;
 
+import lombok.extern.log4j.Log4j2;
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
@@ -17,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * @author jiayongming 有关汉语拼音的工具类
  */
+@Log4j2
 public final class PinyinUtil {
 	private PinyinUtil(){}
 	/**

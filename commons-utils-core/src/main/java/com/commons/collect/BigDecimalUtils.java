@@ -6,7 +6,9 @@ import java.util.List;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 public final class BigDecimalUtils {
 	
 	private BigDecimalUtils() {

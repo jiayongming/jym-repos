@@ -3,6 +3,7 @@ package com.commons.model;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  * @param <T>
  */
 @ToString
+@Log4j2
 public final class PageBean<T> implements Serializable{
 	
 	private static final long serialVersionUID = -1481305626367150084L;

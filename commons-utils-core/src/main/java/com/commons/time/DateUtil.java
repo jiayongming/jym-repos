@@ -1,5 +1,6 @@
 package com.commons.time;
 
+import lombok.extern.log4j.Log4j2;
 import org.joda.time.DateTime;
 
 import java.text.SimpleDateFormat;
@@ -14,6 +15,7 @@ import java.util.Locale;
  * @author jiayongming
  * @email jiayongming@msn.com
  */
+@Log4j2
 public final class DateUtil {
 
     private DateUtil() {
