@@ -56,7 +56,6 @@ public class MethodInvokeTime implements MethodInterceptor {
 	/**
 	 * 获取执行方法的参数
 	 */
-	@SuppressWarnings("unchecked")
 	public String getString(Object[] objs) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0, len = objs.length; i < len; i++) {

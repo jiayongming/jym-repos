@@ -10,13 +10,45 @@
 
     <name>${project.artifactId}</name>
     <description>commons-utils-core</description>
+    <url>https://github.com/jiayongming/jym-repos/tree/master/commons-utils-core</url>
+
+    <developers>
+        <developer>
+            <name>jiayongming</name>
+            <email>jiayongming@msn.com</email>
+            <url>https://github.com/jiayongming</url>
+        </developer>
+    </developers>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>4.3.5.RELEASE</spring.version>
+        <junit.version>4.8.2</junit.version>
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-excelant</artifactId>
+            <version>3.8</version>
+        </dependency>
+        <!--java-mail-->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.5.5</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sourceforge.jchardet</groupId>
+            <artifactId>jchardet</artifactId>
+            <version>1.0</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/cglib/cglib-nodep -->
         <dependency>
             <groupId>cglib</groupId>
@@ -197,14 +229,45 @@
 
     </dependencies>
 
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <!-- Source -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.0.4</version>
+                    </plugin>
+                    <!-- Javadoc -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.5</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <build>
         <finalName>commons-utils-core</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <encoding>utf-8</encoding>
                 </configuration>
             </plugin>

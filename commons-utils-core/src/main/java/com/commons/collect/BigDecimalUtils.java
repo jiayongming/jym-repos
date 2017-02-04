@@ -46,7 +46,7 @@ public final class BigDecimalUtils {
 		
 		BigDecimal avgBigDecimal = avgBigDecimal(newArrayList);
 		
-		System.out.println(avgBigDecimal);
+		log.info(avgBigDecimal);
 	}
 
 }
