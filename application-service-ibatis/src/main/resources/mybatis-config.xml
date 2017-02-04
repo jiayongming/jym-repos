@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 配置mybatis的缓存，延迟加载等等一系列属性 -->
+    <settings>
+        <!-- 全局映射器启用缓存(默认true)-->
+        <setting name="cacheEnabled" value="true"/>
+        <!-- 查询时，关闭关联对象即时加载以提高性能(默认true) -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!-- 设置关联对象加载的形态，按需加载字段(加载字段由SQL指定)，以提高性能(默认true) -->
+        <setting name="aggressiveLazyLoading" value="false" />
+        <!-- 对于未知的SQL查询，允许返回不同的结果集以达到通用的效果(默认true) -->
+        <setting name="multipleResultSetsEnabled" value="true" />
+        <!-- 允许使用列标签代替列名(默认true)  -->
+        <setting name="useColumnLabel" value="true" />
+        <!-- 允许自定义的主键，数据表的PK生成策略将被覆盖(默认false)  -->
+        <!-- <setting name="useGeneratedKeys" value="true" /> -->
+        <!-- 给予被嵌套的resultMap以字段-属性的映射支持(默认PARTIAL) -->
+        <setting name="autoMappingBehavior" value="FULL" />
+        <!-- 支持批量更新操作缓存SQL以提高性能(默认SIMPLE)  -->
+        <setting name="defaultExecutorType" value="BATCH" />
+        <!-- 设置数据库超时时间(S) -->
+        <setting name="defaultStatementTimeout" value="25000" />
+    </settings>
+    <!-- 实体别名设置，映射文件中写别名即可 -->
+    <typeAliases>
+        <package name="com.gemantic.wealth.application.model" />
+    </typeAliases>
+</configuration>

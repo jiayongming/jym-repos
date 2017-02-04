@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:sca="http://www.springframework.org/schema/sca"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+            http://www.springframework.org/schema/sca http://www.springframework.org/schema/sca/spring-sca.xsd">
+
+	<context:component-scan base-package="com.gemantic.wealth.application" />
+
+	<sca:service name="appHotSaleService"
+		type="com.gemantic.wealth.application.service.impl.AppHotSaleService"
+		target="appHotSaleService" />
+		
+	<bean id="appHotSaleService"
+		class="com.gemantic.wealth.application.service.impl.AppHotSaleServiceImpl">
+	</bean>
+
+	<!-- 使用apache的DBCP连接池 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<!-- Connection Info -->
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://db.wealth.application:3307/wealth-Application?defaultBatchValue=1000" />
+		<property name="username" value="wealth_appuser" />
+		<property name="password" value="Ymk2rula" />
+		<!-- Connection Pooling DBCP -->
+		<property name="initialSize" value="1" />
+		<property name="maxActive" value="100" />
+		<property name="maxIdle" value="30" />
+		<property name="maxWait" value="1000" />
+		<property name="poolPreparedStatements" value="true" />
+		<property name="defaultAutoCommit" value="false" />
+	</bean>
+
+	<!-- 这里的dataSource要与sqlSessionFactory的dataSource一致，否则事务无效 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 读取mybatis配置文件 -->
+		<property name="configLocation" value="classpath:/mybatis-config.xml"/>
+		<!-- 扫描映射文件 -->
+		<property name="mapperLocations" value="classpath:mapper/*.xml"/>
+	</bean>
+
+	<!-- 构建接口的实现类，id自动为接口的首字母变小写，包名可以用\,或者\;隔开 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+		<property name="basePackage" value="com.gemantic.wealth.application.interf"/>
+	</bean>
+	
+</beans>
+

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<composite xmlns="http://www.osoa.org/xmlns/sca/1.0" xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0"
+    xmlns:scallop="http://scallop/xmlns/sca/1.0"
+    targetNamespace="http://WealthApplicationComponent" xmlns:sample="http://WealthApplicationComponent" name="WealthApplicationComponent">
+
+    <component name="WealthApplicationComponent">
+        <implementation.spring location="META-INF/application-service-ibatis/applicationContext-server.xml" />
+
+        <service name="appHotSaleService" promote="WealthApplicationComponent/appHotSaleService">
+            <interface.java interface="com.gemantic.wealth.application.service.impl.AppHotSaleService"/>
+            <scallop:binding.rmi host="localhost" port="8884" serviceName="AppHotSaleRMIService"/>
+        </service>
+
+
+
+
+
+
+
+   </component>
+</composite>

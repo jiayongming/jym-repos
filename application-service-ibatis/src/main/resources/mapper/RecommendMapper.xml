@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gemantic.wealth.application.interf.RecommendMapper" >
+  <resultMap id="BaseResultMap" type="com.gemantic.wealth.application.model.Recommend" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="pad_img" property="padImg" jdbcType="VARCHAR" />
+    <result column="web_img" property="webImg" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="online_status" property="onlineStatus" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="publish_at" property="publishAt" jdbcType="BIGINT" />
+    <result column="create_at" property="createAt" jdbcType="BIGINT" />
+    <result column="update_at" property="updateAt" jdbcType="BIGINT" />
+    <result column="commit_at" property="commitAt" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.gemantic.wealth.application.model.RecommendWithBLOBs" extends="BaseResultMap" >
+    <result column="backup_img" property="backupImg" jdbcType="LONGVARCHAR" />
+    <result column="comment" property="comment" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, code, title, type, pad_img, web_img, status, online_status, level, publish_at, 
+    create_at, update_at, commit_at
+  </sql>
+  <sql id="Blob_Column_List" >
+    backup_img, comment
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.gemantic.wealth.application.model.RecommendExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from recommend
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gemantic.wealth.application.model.RecommendExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from recommend
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from recommend
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from recommend
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gemantic.wealth.application.model.RecommendExample" >
+    delete from recommend
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gemantic.wealth.application.model.RecommendWithBLOBs" >
+    insert into recommend (id, code, title, 
+      type, pad_img, web_img, 
+      status, online_status, level, 
+      publish_at, create_at, update_at, 
+      commit_at, backup_img, comment
+      )
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{padImg,jdbcType=VARCHAR}, #{webImg,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{onlineStatus,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR}, 
+      #{publishAt,jdbcType=BIGINT}, #{createAt,jdbcType=BIGINT}, #{updateAt,jdbcType=BIGINT}, 
+      #{commitAt,jdbcType=BIGINT}, #{backupImg,jdbcType=LONGVARCHAR}, #{comment,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gemantic.wealth.application.model.RecommendWithBLOBs" >
+    insert into recommend
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="padImg != null" >
+        pad_img,
+      </if>
+      <if test="webImg != null" >
+        web_img,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="onlineStatus != null" >
+        online_status,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="publishAt != null" >
+        publish_at,
+      </if>
+      <if test="createAt != null" >
+        create_at,
+      </if>
+      <if test="updateAt != null" >
+        update_at,
+      </if>
+      <if test="commitAt != null" >
+        commit_at,
+      </if>
+      <if test="backupImg != null" >
+        backup_img,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="padImg != null" >
+        #{padImg,jdbcType=VARCHAR},
+      </if>
+      <if test="webImg != null" >
+        #{webImg,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="onlineStatus != null" >
+        #{onlineStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="publishAt != null" >
+        #{publishAt,jdbcType=BIGINT},
+      </if>
+      <if test="createAt != null" >
+        #{createAt,jdbcType=BIGINT},
+      </if>
+      <if test="updateAt != null" >
+        #{updateAt,jdbcType=BIGINT},
+      </if>
+      <if test="commitAt != null" >
+        #{commitAt,jdbcType=BIGINT},
+      </if>
+      <if test="backupImg != null" >
+        #{backupImg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gemantic.wealth.application.model.RecommendExample" resultType="java.lang.Integer" >
+    select count(*) from recommend
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update recommend
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.code != null" >
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.padImg != null" >
+        pad_img = #{record.padImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.webImg != null" >
+        web_img = #{record.webImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.onlineStatus != null" >
+        online_status = #{record.onlineStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.level != null" >
+        level = #{record.level,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publishAt != null" >
+        publish_at = #{record.publishAt,jdbcType=BIGINT},
+      </if>
+      <if test="record.createAt != null" >
+        create_at = #{record.createAt,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateAt != null" >
+        update_at = #{record.updateAt,jdbcType=BIGINT},
+      </if>
+      <if test="record.commitAt != null" >
+        commit_at = #{record.commitAt,jdbcType=BIGINT},
+      </if>
+      <if test="record.backupImg != null" >
+        backup_img = #{record.backupImg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.comment != null" >
+        comment = #{record.comment,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update recommend
+    set id = #{record.id,jdbcType=BIGINT},
+      code = #{record.code,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      pad_img = #{record.padImg,jdbcType=VARCHAR},
+      web_img = #{record.webImg,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      online_status = #{record.onlineStatus,jdbcType=VARCHAR},
+      level = #{record.level,jdbcType=VARCHAR},
+      publish_at = #{record.publishAt,jdbcType=BIGINT},
+      create_at = #{record.createAt,jdbcType=BIGINT},
+      update_at = #{record.updateAt,jdbcType=BIGINT},
+      commit_at = #{record.commitAt,jdbcType=BIGINT},
+      backup_img = #{record.backupImg,jdbcType=LONGVARCHAR},
+      comment = #{record.comment,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update recommend
+    set id = #{record.id,jdbcType=BIGINT},
+      code = #{record.code,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      pad_img = #{record.padImg,jdbcType=VARCHAR},
+      web_img = #{record.webImg,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      online_status = #{record.onlineStatus,jdbcType=VARCHAR},
+      level = #{record.level,jdbcType=VARCHAR},
+      publish_at = #{record.publishAt,jdbcType=BIGINT},
+      create_at = #{record.createAt,jdbcType=BIGINT},
+      update_at = #{record.updateAt,jdbcType=BIGINT},
+      commit_at = #{record.commitAt,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gemantic.wealth.application.model.RecommendWithBLOBs" >
+    update recommend
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="padImg != null" >
+        pad_img = #{padImg,jdbcType=VARCHAR},
+      </if>
+      <if test="webImg != null" >
+        web_img = #{webImg,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="onlineStatus != null" >
+        online_status = #{onlineStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="publishAt != null" >
+        publish_at = #{publishAt,jdbcType=BIGINT},
+      </if>
+      <if test="createAt != null" >
+        create_at = #{createAt,jdbcType=BIGINT},
+      </if>
+      <if test="updateAt != null" >
+        update_at = #{updateAt,jdbcType=BIGINT},
+      </if>
+      <if test="commitAt != null" >
+        commit_at = #{commitAt,jdbcType=BIGINT},
+      </if>
+      <if test="backupImg != null" >
+        backup_img = #{backupImg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="comment != null" >
+        comment = #{comment,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.gemantic.wealth.application.model.RecommendWithBLOBs" >
+    update recommend
+    set code = #{code,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      pad_img = #{padImg,jdbcType=VARCHAR},
+      web_img = #{webImg,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      online_status = #{onlineStatus,jdbcType=VARCHAR},
+      level = #{level,jdbcType=VARCHAR},
+      publish_at = #{publishAt,jdbcType=BIGINT},
+      create_at = #{createAt,jdbcType=BIGINT},
+      update_at = #{updateAt,jdbcType=BIGINT},
+      commit_at = #{commitAt,jdbcType=BIGINT},
+      backup_img = #{backupImg,jdbcType=LONGVARCHAR},
+      comment = #{comment,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gemantic.wealth.application.model.Recommend" >
+    update recommend
+    set code = #{code,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      pad_img = #{padImg,jdbcType=VARCHAR},
+      web_img = #{webImg,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      online_status = #{onlineStatus,jdbcType=VARCHAR},
+      level = #{level,jdbcType=VARCHAR},
+      publish_at = #{publishAt,jdbcType=BIGINT},
+      create_at = #{createAt,jdbcType=BIGINT},
+      update_at = #{updateAt,jdbcType=BIGINT},
+      commit_at = #{commitAt,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
