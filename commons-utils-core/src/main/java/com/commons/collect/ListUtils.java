@@ -59,7 +59,7 @@ public final class ListUtils {
 		pageBean.setTotalCount(list.size()) ;
 		Integer start = pageBean.getStart();
 		Integer end = pageBean.getEnd();
-		List<E> result = Lists.newArrayListWithCapacity(pageBean.getPageSize());
+		List<E> result = Lists.newArrayListWithCapacity(end - start >= 0 ? end - start : start - end);
 		for (int i = start; i < end ; i++) {
 			if ( start >= list.size() || i == list.size() ) {
 				break ;
