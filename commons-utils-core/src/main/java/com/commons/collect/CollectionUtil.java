@@ -112,31 +112,31 @@ public class CollectionUtil {
     /**
      * 求俩个集合的交集
      */
-    public final  static <T> List<T> intersection(List<T> list1, List<T> list2) {
+    public final static <T> List<T> intersection(List<T> list1, List<T> list2) {
         if (Valid.valid(list1, list2)) {
-            Set<T> set = new HashSet<>(list1);
+            Set<T> set = Sets.newHashSet(list1) ;
             set.retainAll(list2);
-            return new ArrayList<>(set);
+            return Lists.newArrayList(set);
         }
-        return new ArrayList<T>();
+        return Lists.newArrayListWithCapacity(0);
     }
 
     public final static <T> Set<T> intersection(Set<T> set1, Set<T> set2) {
         if (Valid.valid(set1, set2)) {
-            List<T> list = new ArrayList<T>(set1);
+            List<T> list = Lists.newArrayList(set1);
             list.retainAll(set2);
-            return new HashSet<>(list);
+            return Sets.newHashSet(list);
         }
-        return new HashSet<T>();
+        return Sets.newHashSetWithExpectedSize(0);
     }
 
     public final static <T> Queue<T> intersection(Queue<T> queue1, Queue<T> queue2) {
         if (Valid.valid(queue1, queue2)) {
-            Set<T> set = new HashSet<T>(queue1);
+            Set<T> set = Sets.newHashSet(queue1);
             set.retainAll(queue2);
-            return new LinkedList<T>(set);
+            return Lists.newLinkedList(set) ;
         }
-        return new LinkedList<T>();
+        return Lists.newLinkedList();
     }
 
     /**
@@ -149,10 +149,10 @@ public class CollectionUtil {
      * @return
      */
     public final static <K, V> Map<K, V> intersection(Map<K, V> map1, Map<K, V> map2) {
-        Map<K, V> map = new HashMap<>(map1.size());
+        Map<K, V> map = Maps.newHashMapWithExpectedSize(map1.size());
         if (Valid.valid(map1, map2)) {
-            Set<K> setkey1 = new HashSet<>(map1.keySet());
-            Set<K> setkey2 = new HashSet<>(map2.keySet());
+            Set<K> setkey1 = Sets.newHashSet(map1.keySet());
+            Set<K> setkey2 = Sets.newHashSet(map2.keySet());
             setkey1.retainAll(setkey2);
             for (K k : setkey1) {
                 map.put(k, map1.get(k));
@@ -167,28 +167,46 @@ public class CollectionUtil {
      * 求俩个集合的并集
      */
     public final static <T> List<T> unicon(List<T> list1, List<T> list2) {
-        List<T> list = new ArrayList(list1.size()+list2.size());
+        if (null == list1){
+            list1 = Lists.newArrayListWithCapacity(0) ;
+        }
+        if (null == list2){
+            list2 = Lists.newArrayListWithCapacity(0) ;
+        }
+        List<T> list = Lists.newArrayListWithCapacity(list1.size() + list2.size());
         list.addAll(list1);
         list.addAll(list2);
         return list;
     }
 
     public final static <T> Set<T> unicon(Set<T> set1, Set<T> set2) {
-        Set<T> set = new HashSet<>(set1.size()+set2.size());
-        set = set1;
+        if (null == set1){
+            set1= Sets.newHashSetWithExpectedSize(0) ;
+        }
+        if (null == set2){
+            set2 = Sets.newHashSetWithExpectedSize(0) ;
+        }
+
+        Set<T> set = set1;
         set.addAll(set2);
         return set;
     }
 
     public final static <T> Queue<T> unicon(Queue<T> queue1, Queue<T> queue2) {
-        Queue queue = new LinkedList();
+        Queue<T> queue = Lists.newLinkedList() ;
         queue.addAll(queue1);
         queue.addAll(queue2);
         return queue;
     }
 
     public final static <K, V> Map<K, V> unicon(Map<K, V> map1, Map<K, V> map2) {
-        Map<K, V> map = new HashMap<>(map1.size()+map2.size());
+        if (null == map1){
+            map1 = Maps.newHashMapWithExpectedSize(0);
+        }
+        if (null == map2){
+            map2 = Maps.newHashMapWithExpectedSize(0) ;
+        }
+        Map<K, V> map = Maps.newHashMapWithExpectedSize(map1.size()+map2.size());
         map.putAll(map1);
         map.putAll(map2);
         return map;
@@ -200,7 +218,13 @@ public class CollectionUtil {
      * 求俩个集合的差集
      */
     public final static <T> List<T> subtract(List<T> list1, List<T> list2) {
-        List<T> list = new ArrayList<>(list1.size()+list2.size());
+        if (null == list1){
+            list1 = Lists.newArrayListWithCapacity(0);
+        }
+        if (null == list2){
+            list2 = Lists.newArrayListWithCapacity(0);
+        }
+        List<T> list = Lists.newArrayListWithCapacity(list1.size()+list2.size());
         if (Valid.valid(list1)) {
             list.addAll(list1);
             list.removeAll(list2);
@@ -209,7 +233,13 @@ public class CollectionUtil {
     }
 
     public final static <T> Set<T> subtract(Set<T> set1, Set<T> set2) {
-        Set<T> set = new HashSet<>(set1.size()+set2.size());
+        if (null == set1){
+            set1 = Sets.newHashSetWithExpectedSize(0);
+        }
+        if (null == set2){
+            set2 = Sets.newHashSetWithExpectedSize(0);
+        }
+        Set<T> set = Sets.newHashSetWithExpectedSize(set1.size()+set2.size());
         if (Valid.valid(set1)) {
             set.addAll(set1);
             set.removeAll(set2);
@@ -218,7 +248,7 @@ public class CollectionUtil {
     }
 
     public final static <T> Queue<T> subtract(Queue<T> queue1, Queue<T> queue2) {
-        Queue<T> queue = new LinkedList<>();
+        Queue<T> queue = Lists.newLinkedList() ;
         if (Valid.valid(queue1)) {
             queue.addAll(queue1);
             queue.removeAll(queue2);
@@ -227,10 +257,16 @@ public class CollectionUtil {
     }
 
     public final static <K, V> Map<K, V> subtract(Map<K, V> map1, Map<K, V> map2) {
-        Map<K, V> map = new HashMap<>(map1.size()+map2.size());
+        if (null == map1){
+            map1 = Maps.newHashMapWithExpectedSize(0);
+        }
+        if (null == map2){
+            map2 = Maps.newHashMapWithExpectedSize(0) ;
+        }
+        Map<K, V> map = Maps.newHashMapWithExpectedSize(map1.size()+map2.size());
         if (Valid.valid(map1, map2)) {
-            Set<K> setkey1 = new HashSet<>(map1.keySet());
-            Set<K> setkey2 = new HashSet<>(map2.keySet());
+            Set<K> setkey1 = Sets.newHashSet(map1.keySet());
+            Set<K> setkey2 = Sets.newHashSet(map2.keySet());
             for (K k : setkey2) {
                 setkey1.remove(k);
             }
