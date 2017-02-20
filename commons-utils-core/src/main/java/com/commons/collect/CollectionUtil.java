@@ -94,7 +94,7 @@ public class CollectionUtil {
         return result;
     }
 
-    public final static <K, V> Map Filter(Map<K, V> map, MapFilter filter) {
+    public final static <K, V> Map filter(Map<K, V> map, MapFilter filter) {
         if (Valid.valid(map)) {
             log.error("map is empty or is null");
             return Maps.newHashMapWithExpectedSize(0);
