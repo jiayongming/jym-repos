@@ -1,6 +1,7 @@
 package com.commons.files;
 
 import com.commons.util.Valid;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -10,6 +11,7 @@ import java.util.List;
 /**
  * 文件编码相关的一些工具函数
  */
+@Log4j2
 public class FileEncodingUtil {
     /**
      * 把指定文件或目录转换成指定的编码
@@ -55,8 +57,7 @@ public class FileEncodingUtil {
      */
     public static void convert(File file, String fromCharsetName, String toCharsetName, FilenameFilter filter) {
         if (file.isDirectory()) {
-            List<File> list = Valid.valid(filter) ? FileUtil.listFileFilter(file, filter) :
-                    FileUtil.listFile(file);
+            List<File> list = Valid.valid(filter) ? FileUtil.listFileFilter(file, filter) : FileUtil.listFile(file);
             if (Valid.valid(list)) {
                 for (File f : list) {
                     convert(f, fromCharsetName, toCharsetName, filter);
@@ -88,7 +89,7 @@ public class FileEncodingUtil {
             reader.read(chs);
             str = new String(chs).trim();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("getFileContentFromCharset error:",e);
         }
         return str;
     }
@@ -110,7 +111,7 @@ public class FileEncodingUtil {
         ) {
             outWrite.write(content);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("saveFile2Charset error:",e);
         }
     }
 }

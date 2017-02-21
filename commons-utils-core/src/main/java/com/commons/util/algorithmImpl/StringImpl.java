@@ -2,12 +2,14 @@ package com.commons.util.algorithmImpl;
 
 import com.commons.util.CharsetUtil;
 import com.commons.util.SysUtil;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.UnsupportedEncodingException;
 
 /**
  * 对比俩个字符串的相似度
  */
+@Log4j2
 public class StringImpl {
     //第一种实现方式
     private static String longestCommonSubstring(String strA, String strB) {
@@ -150,8 +152,7 @@ public class StringImpl {
                 return "ISO-8859-1";
             }
         }catch(UnsupportedEncodingException e) {
-            System.out.println("111111111");
-            e.printStackTrace();
+            log.info("111111111:",e);
         }
         String encode = "GB2312";
 

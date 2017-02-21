@@ -12,17 +12,17 @@ public class FTPFactory {
 
 
     //获取一个实例
-    public static FTPUtil getInstance(String Name) throws IOException {
+    public static FTPUtil getInstance(String name) throws IOException {
 
-        String host = DefaultConfig.get(Name + ".host");
+        String host = DefaultConfig.get(name + ".host");
         if (host != null) {
-            int port = Integer.parseInt(DefaultConfig.get(Name + ".port"));
-            String username = DefaultConfig.get(Name + ".username");
-            String password = DefaultConfig.get(Name + ".password");
-            String remoteDir = DefaultConfig.get(Name + ".remoteDir");
-            String localDir = DefaultConfig.get(Name + ".localDir");
-            String Encoding = DefaultConfig.get(Name + ".Encoding");
-            boolean passiveMode = new Boolean(DefaultConfig.get(Name + ".passiveMode")).booleanValue();
+            int port = Integer.parseInt(DefaultConfig.get(name + ".port"));
+            String username = DefaultConfig.get(name + ".username");
+            String password = DefaultConfig.get(name + ".password");
+            String remoteDir = DefaultConfig.get(name + ".remoteDir");
+            String localDir = DefaultConfig.get(name + ".localDir");
+            String Encoding = DefaultConfig.get(name + ".Encoding");
+            boolean passiveMode = new Boolean(DefaultConfig.get(name + ".passiveMode")).booleanValue();
             FTPVo vo = new FTPVo(host, port, username, password, remoteDir, localDir, Encoding, passiveMode);
             return new FTPUtilImpl(vo);
         } else {

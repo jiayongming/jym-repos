@@ -1,19 +1,22 @@
 package com.commons.files;
 
+import com.google.common.collect.Maps;
+import lombok.extern.log4j.Log4j2;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 /**
  * 利用文件头来实现的一些文件类型的方法封装
  */
+@Log4j2
 public class FileTypeImpl {
 
-    public final static Map<String,String> FILE_TYPE_MAP = new HashMap<String,String>();
+    public final static Map<String,String> FILE_TYPE_MAP = Maps.newHashMapWithExpectedSize(32);
 
     static {
         FILE_TYPE_MAP.put("jpg", "FFD8FF"); //JPEG (jpg)
@@ -60,7 +63,7 @@ public class FileTypeImpl {
      */
     public final static String getFileType(File file) {
         String filetype = null;
-        byte[] b        = new byte[50];
+        byte[] b = new byte[50];
         try (
                 InputStream is = new FileInputStream(file)
         ) {
@@ -68,7 +71,7 @@ public class FileTypeImpl {
             filetype = getFileTypeByStream(b);
             is.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("getFileType error:",e);
         }
         return filetype;
     }
@@ -82,7 +85,7 @@ public class FileTypeImpl {
      * @author:[shixing_11@sina.com]
      */
     public final static String getFileTypeByStream(byte[] b) {
-        String                             filetypeHex   = String.valueOf(getFileHexString(b));
+        String filetypeHex = String.valueOf(getFileHexString(b));
         Iterator<Map.Entry<String,String>> entryiterator = FILE_TYPE_MAP.entrySet().iterator();
         while (entryiterator.hasNext()) {
             Map.Entry<String,String> entry = entryiterator.next();

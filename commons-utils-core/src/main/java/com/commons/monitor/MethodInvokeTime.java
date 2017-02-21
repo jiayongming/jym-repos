@@ -14,7 +14,7 @@ import java.util.Set;
  * 日志标志为 invokeTimeMonitor 
  * Logger.getLogger("invokeTimeMonitor");
  */
-@Log4j2
+@Log4j2(topic = "invokeTimeMonitor")
 public class MethodInvokeTime implements MethodInterceptor {
 
 	@Override

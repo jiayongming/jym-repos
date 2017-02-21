@@ -1,6 +1,7 @@
 package com.commons.util;
 
 import com.sun.management.OperatingSystemMXBean;
+import lombok.extern.log4j.Log4j2;
 
 import java.lang.management.ManagementFactory;
 import java.net.Inet4Address;
@@ -14,6 +15,7 @@ import java.util.List;
 /**
  * 提供些获取系统信息相关的工具方法
  */
+@Log4j2
 public class SysUtil {
 
     /**
@@ -101,7 +103,7 @@ public class SysUtil {
             }
             HOST_IP = HOST_IP.replaceAll("null", "");
         } catch (Exception e) {
-            System.out.println("获取服务器IP出错");
+            log.error("获取服务器IP出错:",e);
         }
 
         try {
@@ -109,8 +111,7 @@ public class SysUtil {
 
             TotalMemorySize = osmxb.getTotalPhysicalMemorySize() / kb;
         } catch (Exception e) {
-            System.out.println("获取系统信息失败");
-            e.printStackTrace();
+            log.error("获取系统信息失败:",e);
         }
 
 

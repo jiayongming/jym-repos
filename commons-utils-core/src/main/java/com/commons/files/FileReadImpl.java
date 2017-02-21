@@ -1,5 +1,7 @@
 package com.commons.files;
 
+import lombok.extern.log4j.Log4j2;
+
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -7,6 +9,7 @@ import java.nio.channels.FileChannel;
 /**
  * 封装了集中常用的文件读的方法
  */
+@Log4j2
 public class FileReadImpl {
 
     /**
@@ -24,7 +27,7 @@ public class FileReadImpl {
         ) {
             in.transferTo(0, in.size(), out);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("copyFileWithChannel error:",e);
         }
     }
 
@@ -48,7 +51,7 @@ public class FileReadImpl {
                 buffer.clear();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("copyFileWithBuffer error:",e);
         }
     }
 
@@ -69,7 +72,7 @@ public class FileReadImpl {
                 fos.write(buf, 0, i);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("customBufferBufferedStreamCopy error:",e);
         }
     }
 
@@ -90,7 +93,7 @@ public class FileReadImpl {
                 fos.write(buf, 0, i);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("customBufferStreamCopy error:",e);
         }
     }
 

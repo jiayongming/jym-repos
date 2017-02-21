@@ -1,6 +1,7 @@
 package com.commons.files;
 
 import com.google.common.collect.Maps;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -24,6 +25,7 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.Set;
 
+@Log4j2
 public class ReadExcel {
 
     @Test
@@ -35,35 +37,35 @@ public class ReadExcel {
             InputStream inp = new FileInputStream("D:\\eclipse20150831\\workspace\\excelXML\\resources\\user_address-0902.xlsx");
             Workbook wb = WorkbookFactory.create(inp);
             int numberOfSheets = wb.getNumberOfSheets();
-            System.out.println("工作表个数为：" + numberOfSheets);
+            log.info("工作表个数为：" + numberOfSheets);
             Sheet sheet = wb.getSheetAt(0); // 第一个工作表
             // 获得总列数
             int coloumNum = sheet.getRow(0).getPhysicalNumberOfCells();
-            System.out.println("获得总列数" + coloumNum);
+            log.info("获得总列数" + coloumNum);
             // 获得总行数
             int rowNum = sheet.getLastRowNum();
-            System.out.println("获得总行数" + rowNum);
+            log.info("获得总行数" + rowNum);
 
 			/* Cell cell54 = sheet.getRow(31).getCell(1); */// 获得第32行的第2个单元格
             for (int i = 1; i <= rowNum; i++) {
                 Cell cell1 = sheet.getRow(i).getCell(0); // 第一列单元格的值
                 Cell cell3 = sheet.getRow(i).getCell(3); // 第三列单元格的值
-                System.out.println(i + "===" + cell1.getStringCellValue().replace("\"", "") + "===" + cell3.getStringCellValue().replace("\"", ""));
+                log.info(i + "===" + cell1.getStringCellValue().replace("\"", "") + "===" + cell3.getStringCellValue().replace("\"", ""));
                 banksMap.put(cell1.getStringCellValue().replace("\"", ""), cell3.getStringCellValue().replace("\"", ""));
             }
 
             writeXML(banksMap);
-            System.out.println("生成xml成功");
+            log.info("生成xml成功");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("test error:",e);
         }
     }
 
     public static void writeXML(Map<String, String> banksInfoMap) throws Exception {
 
 
-        System.out.println(banksInfoMap.size());
+        log.info(banksInfoMap.size());
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document doc = builder.newDocument();
@@ -87,7 +89,7 @@ public class ReadExcel {
             map.appendChild(entry);
             i++;
         }
-        System.out.println(i);
+        log.info(i);
         // 按顺序添加各个节点
         doc.appendChild(bean);
         bean.appendChild(constructor_arg);

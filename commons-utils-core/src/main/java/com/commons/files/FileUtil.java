@@ -3,6 +3,7 @@ package com.commons.files;
 import com.commons.util.RegUtil;
 import com.commons.util.SysUtil;
 import com.commons.util.Valid;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.*;
 import java.math.BigInteger;
@@ -19,6 +20,7 @@ import java.util.List;
 /**
  * 封装了些文件相关的操作
  */
+@Log4j2
 public final class FileUtil {
     /**
      * Buffer的大小
@@ -31,7 +33,7 @@ public final class FileUtil {
         try {
             MD5 = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException ne) {
-            ne.printStackTrace();
+            log.error("FileUtil error:",ne);
         }
     }
 
@@ -51,14 +53,14 @@ public final class FileUtil {
             }
             return new BigInteger(1, MD5.digest()).toString(16);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("fileMD5 IO error:",e);
             return null;
         } finally {
             try {
                 if (fileInputStream != null)
                     fileInputStream.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error("fileMD5 close error:",e);
             }
         }
     }
@@ -74,7 +76,7 @@ public final class FileUtil {
             rf.skip(fileLength);
             return rf.getLineNumber();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("countLines error:",e);
         }
         return 0;
     }
@@ -95,7 +97,7 @@ public final class FileUtil {
                 list.add(line);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("lines IO error:",e);
         }
         return list;
     }
@@ -117,7 +119,7 @@ public final class FileUtil {
                 list.add(line);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("lines IO error:",e);
         }
         return list;
     }
@@ -140,7 +142,7 @@ public final class FileUtil {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("lines IO error:",e);
         }
         return list;
     }
@@ -166,7 +168,7 @@ public final class FileUtil {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("lines IO error:",e);
         }
         return list;
     }
@@ -187,7 +189,7 @@ public final class FileUtil {
             randomFile.writeBytes(SysUtil.FILE_SEPARATOR + str);
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("appendLine IO error:",e);
         }
         return false;
     }
@@ -209,7 +211,7 @@ public final class FileUtil {
             randomFile.seek(fileLength);
             randomFile.write((lineSeparator + str).getBytes(encoding));
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("appendLine IO error:",e);
         }
         return false;
     }
@@ -224,7 +226,7 @@ public final class FileUtil {
             randomFile.writeBytes(str);
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("write IO error:",e);
         }
         return false;
     }
@@ -241,7 +243,7 @@ public final class FileUtil {
             randomFile.writeBytes(str);
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("writeAppend IO error:",e);
         }
         return false;
     }
@@ -256,7 +258,7 @@ public final class FileUtil {
             randomFile.write(str.getBytes(encoding));
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("write IO error:",e);
         }
         return false;
     }
@@ -273,7 +275,7 @@ public final class FileUtil {
             randomFile.write(str.getBytes(encoding));
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("writeAppend IO error:",e);
         }
         return false;
     }
@@ -291,7 +293,7 @@ public final class FileUtil {
             fw.write("");
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("cleanFile IO error:",e);
         }
         return false;
     }
@@ -370,7 +372,7 @@ public final class FileUtil {
                 buffer.clear();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("copy IO error:",e);
         }
         return false;
     }
@@ -387,7 +389,7 @@ public final class FileUtil {
         try {
             return FileImpl.simpleEncoding(file);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("simpleEncoding error:",e);
         }
         return null;
     }
@@ -417,7 +419,7 @@ public final class FileUtil {
                 try {
                     return file.createNewFile();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.error("createFiles error:",e);
                 }
             }
         }

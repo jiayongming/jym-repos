@@ -1,5 +1,7 @@
 package com.commons.util;
 
+import lombok.extern.log4j.Log4j2;
+
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
@@ -12,6 +14,7 @@ import java.util.Properties;
  * Description
  * 封装Email相关的操作
  */
+@Log4j2
 public final class EmailUtil {
 
 
@@ -90,7 +93,6 @@ public final class EmailUtil {
             transport.connect(mailHost, port, sender_username, sender_password);
             // 发送
             transport.sendMessage(message, message.getAllRecipients());
-            //System.out.println("send success!");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -161,7 +163,7 @@ public final class EmailUtil {
             // 发送
             transport.sendMessage(message, message.getAllRecipients());
 
-            System.out.println("send success!");
+            log.info("send success!");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

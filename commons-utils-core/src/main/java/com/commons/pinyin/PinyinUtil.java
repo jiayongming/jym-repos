@@ -128,6 +128,6 @@ public final class PinyinUtil {
 
 	public static void main(String[] args) {
 		String firstPinyin = getFirstPinyin("重庆银行",false);
-		System.err.println(firstPinyin);
+		log.info(firstPinyin);
 	}
 }

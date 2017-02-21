@@ -1,5 +1,6 @@
 package com.commons.compare;
 
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -30,13 +31,10 @@ public class VersionCompare {
 		return diff;
 	}
 
+	@SneakyThrows
 	public static void main(String[] args) {
-		try {
-			int compareVersion = compareVersion("9.9.9.9", "10.8.8.6");
-			System.out.println(compareVersion);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		int compareVersion = compareVersion("9.9.9.9", "10.8.8.6");
+		log.info(compareVersion);
 	}
 
 }

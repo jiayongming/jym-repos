@@ -1,6 +1,6 @@
 package com.commons.files;
 
-
+import lombok.extern.log4j.Log4j2;
 import org.mozilla.intl.chardet.nsDetector;
 import org.mozilla.intl.chardet.nsICharsetDetectionObserver;
 
@@ -9,6 +9,7 @@ import java.io.*;
 /**
  * 文件相关的算法实现
  */
+@Log4j2
 public class FileImpl {
 
 
@@ -16,8 +17,8 @@ public class FileImpl {
      * **************************************************
      * 以下方式利用mozilla的jchardet作为探测工具
      */
-
     private static boolean found = false;
+
     /**
      * 如果完全匹配某个字符集检测算法, 则该属性保存该字符集的名称. 否则(如二进制文件)其值就为默认值 null, 这时应当查询属性
      */
@@ -38,7 +39,7 @@ public class FileImpl {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String code = null;
+        String code ;
         switch (p) {
             case 0xefbb:
                 code = "UTF-8";
@@ -144,7 +145,7 @@ public class FileImpl {
             }
             det.DataEnd();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("geestFileEncoding error:",e);
         }
 
 

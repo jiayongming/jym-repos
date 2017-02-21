@@ -1,6 +1,7 @@
 package com.commons.image;
 
 import com.commons.files.FileUtil;
+import lombok.extern.log4j.Log4j2;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
@@ -19,6 +20,7 @@ import java.util.List;
  *
  * @author adam.胡升阳
  */
+@Log4j2
 public final class OperateImage {
     // 图形交换格式
     public static String IMAGE_TYPE_GIF = "gif";
@@ -247,7 +249,7 @@ public final class OperateImage {
         try {
             int len = pics.length;
             if (len < 1) {
-                System.out.println("pics len < 1");
+                log.info("pics len < 1");
                 return false;
             }
             File[] src = new File[len];
@@ -268,10 +270,8 @@ public final class OperateImage {
                 dst_height = dst_height > images[i].getHeight() ? dst_height : images[i].getHeight();
                 dst_width += images[i].getWidth();
             }
-            //System.out.println(dst_width);
-            //System.out.println(dst_height);
             if (dst_height < 1) {
-                System.out.println("dst_height < 1");
+                log.info("dst_height < 1");
                 return false;
             }
             /*
@@ -347,7 +347,7 @@ public final class OperateImage {
         try {
             int len = pics.length;
             if (len < 1) {
-                System.out.println("pics len < 1");
+                log.info("pics len < 1");
                 return false;
             }
             File[] src = new File[len];
@@ -369,10 +369,8 @@ public final class OperateImage {
                 dst_width = dst_width > images[i].getWidth() ? dst_width : images[i].getWidth();
                 dst_height += images[i].getHeight();
             }
-            //System.out.println(dst_width);
-            //System.out.println(dst_height);
             if (dst_height < 1) {
-                System.out.println("dst_height < 1");
+                log.info("dst_height < 1");
                 return false;
             }
             /*
@@ -460,7 +458,6 @@ public final class OperateImage {
                     String additionImagePath = additionImageInfo[2];
                     //读取文件输入流，并合并图片
                     is2 = new FileInputStream(additionImagePath);
-                    //System.out.println(x+"  :  "+y+"  :  "+additionImagePath);
                     image2 = ImageIO.read(is2);
                     g.drawImage(image2, x, y, null);
                 }
