@@ -1,0 +1,35 @@
+一、基本操作
+ssh-keygen -t rsa -C "注册的github邮箱"
+
+1.git config --list
+	user.name=jiayongming(git config user.name)
+	user.email=jiayongming@msn.com
+2.	git clone https://github.com/mybatis/mybatis-3.git 目录名 (克隆项目)
+	git status 检查当前文件状态
+	git diff --staged
+	git commit -a(跳过git add) -m "shuoming"
+	查看当前的远程库:git remote -v 
+	添加远程仓库:git remote add origin git@github.com:jiayongming/jym-repos.git
+	远程仓库抓取数据:git fetch [remote-name]
+	推送数据到远程仓库:git push [remote-name] [branch-name]
+	远程仓库的删除和重命名:git remote rename origin paul
+							git remote rm origin
+	标签:git tag -a v1.4 -m 'my version 1.4'
+二、Git
+1.git config --global user.name " Your Name Here "
+	git config --global user.email " your_email@example.com "
+	
+	
+	
+git svn clone https://svn.gemantic.com/gemantic/trunk/gemantic-wealth/wealth-business-service --authors-file=users.txt --no-metadata .
+git merge origin/master  --allow-unrelated-histories
+mvn jgitflow:release-start -DreleaseVersion=0.0.178 -DdevelopmentVersion=0.0.179-SNAPSHOT -DpushReleases=true -DallowSnapshots=true
+mvn jgitflow:release-finish -DnoReleaseBuild=true -DnoDeploy=true -DpushReleases=true
+
+
+
+
+git svn clone https://svn.gemantic.com/gemantic/trunk/gemantic-wealth/wealth-business-service/ --no-metadata --authors-file=users.txt --trunk=trunk wealth-business-service
+cd wealth-business-service
+git svn clone https://svn.gemantic.com/gemantic/trunk/gemantic-wealth/wealth-business-service --authors-file=users.txt --no-metadata .
+jgitflow:release-start
