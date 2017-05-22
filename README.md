@@ -1,13 +1,12 @@
-# 如何在github上添加 SSH key
+# 如何在Github上添加SSH key
 
-## 1.首先需要检查你电脑是否已经有SSH key
+## 1.首先检查PC是否已经有SSH key
 运行 git Bash 客户端，输入如下代码：
 ```javascript
 $ cd ~/.ssh
 $ ls
 ```
-这两个命令就是检查是否已经存在 id_rsa.pub 或 id_dsa.pub 文件，
-如果文件已经存在，那么你可以跳过步骤2，直接进入步骤3。
+这两个命令就是检查是否已经存在 id_rsa.pub 或 id_dsa.pub 文件，如果文件已经存在，那么你可以跳过步骤2，直接进入步骤3。
 
 ## 2.创建一个SSH key
 ```javascript
@@ -24,9 +23,7 @@ $ ssh-keygen -t rsa -C "your_email@example.com"
 Generating public/private rsa key pair.
 Enter file in which to save the key (/c/Users/you/.ssh/id_rsa): [Press enter]
 ```
-当然，你也可以不输入文件名，使用默认文件名（推荐），那么就会生成 id_rsa 和 id_rsa.pub 两个秘钥文件。
-接着又会提示你输入两次密码（该密码是你push文件的时候要输入的密码，而不是github管理者的密码），
-当然，你也可以不输入密码，直接按回车。那么push的时候就不需要输入密码，直接提交到github上了，如：
+当然，你也可以不输入文件名，使用默认文件名（推荐），那么就会生成 id_rsa 和 id_rsa.pub 两个秘钥文件。接着又会提示你输入两次密码（该密码是你push文件的时候要输入的密码，而不是github管理者的密码），当然，你也可以不输入密码，直接按回车。那么push的时候就不需要输入密码，直接提交到github上了，如：
 ```javascript
 Enter passphrase (empty for no passphrase): 
 Enter same passphrase again:
@@ -39,18 +36,18 @@ Your public key has been saved in /c/Users/you/.ssh/id_rsa.pub.
 The key fingerprint is:
 01:0f:f4:3b:ca:85:d6:17:a1:7d:f0:68:9d:f0:a2:db your_email@example.com
 ```
-当你看到上面这段代码的收，那就说明，你的SSH key已经创建成功，你只需要添加到github的SSH key上就可以了。
+当你看到上面这段代码的收，那就说明，你的SSH key已经创建成功，你只需要添加到Github的SSH key上就可以了。
 
-## 3.添加你的SSH key到github
+## 3.添加你的SSH key到Github
 
 1. 首先你需要拷贝id_rsa.pub文件的内容，你可以用编辑器打开文件复制，也可以用git命令复制该文件的内容，如：
 ```javascript
 $ clip < ~/.ssh/id_rsa.pub
 ```
 
-2. 登录你的github账号，从又上角的设置（Account Settings）进入，然后点击菜单栏的SSH key进入页面添加SSH key。
+2. 登录你的Github账号，从又上角的设置（Account Settings）进入，然后点击菜单栏的SSH key进入页面添加SSH key。
 
-3. 点击Add SSH key按钮添加一个SSH key 。把你复制的SSH key代码粘贴到key所对应的输入框中，记得SSH key代码的前后不要留有空格或者回车。当然，上面的Title所对应的输入框你也可以输入一个该 SSH key 显示在 github 上的一个别名，默认的会使用你的邮件名称。
+3. 点击Add SSH key按钮添加一个SSH key 。把你复制的SSH key代码粘贴到key所对应的输入框中，记得SSH key代码的前后不要留有空格或者回车。当然，上面的Title所对应的输入框你也可以输入一个该 SSH key 显示在Github 上的一个别名，默认的会使用你的邮件名称。
 
 ## 4. 测试一下该SSH key
 
