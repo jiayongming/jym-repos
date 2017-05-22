@@ -1,11 +1,5 @@
-# jym-repos #
-
-Hi , follow me !
-
-# 如何生成SSH key
-
-在github上添加 SSH key 的步骤：
-1、首先需要检查你电脑是否已经有 SSH key
+# 在github上添加 SSH key 的步骤：#
+1.首先需要检查你电脑是否已经有SSH key
 运行 git Bash 客户端，输入如下代码：
 $ cd ~/.ssh
 $ ls
@@ -13,7 +7,7 @@ $ ls
 这两个命令就是检查是否已经存在 id_rsa.pub 或 id_dsa.pub 文件，
 如果文件已经存在，那么你可以跳过步骤2，直接进入步骤3。
 
-2、创建一个SSH key
+2.创建一个SSH key
 $ ssh-keygen -t rsa -C "your_email@example.com"
 
 代码参数含义：
@@ -41,7 +35,7 @@ Your identification has been saved in /c/Users/you/.ssh/id_rsa.
 # 01:0f:f4:3b:ca:85:d6:17:a1:7d:f0:68:9d:f0:a2:db your_email@example.com
 当你看到上面这段代码的收，那就说明，你的 SSH key 已经创建成功，你只需要添加到github的SSH key上就可以了。
 
-3、添加你的 SSH key 到 github上面去
+3.添加你的 SSH key 到 github上面去
 
 a、首先你需要拷贝 id_rsa.pub 文件的内容，你可以用编辑器打开文件复制，也可以用git命令复制该文件的内容，如：
 
@@ -52,7 +46,7 @@ c、点击 Add SSH key 按钮添加一个 SSH key 。把你复制的 SSH key 代
 
  
 
-4、测试一下该SSH key
+4.测试一下该SSH key
 
 在git Bash 中输入以下代码
 
