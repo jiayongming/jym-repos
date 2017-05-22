@@ -19,17 +19,11 @@ ssh-keygen -t rsa -C "注册的github邮箱"
 1.git config --global user.name " Your Name Here "
 	git config --global user.email " your_email@example.com "
 	
-	
-	
-git svn clone https://svn.gemantic.com/gemantic/trunk/gemantic-wealth/wealth-business-service --authors-file=users.txt --no-metadata .
+2.svn项目迁移到git	
+git svn clone https://svn.gemantic.com/gemantic/trunk/gemantic-wealth/wealth-business-service --authors-file=D:\business-service\users.txt --no-metadata .
+git remote add origin git@gitlab.jinhui365.cn:ymjia/wealth-business-service.git
+git push --set-upstream origin master
+
 git merge origin/master  --allow-unrelated-histories
-mvn jgitflow:release-start -DreleaseVersion=0.0.178 -DdevelopmentVersion=0.0.179-SNAPSHOT -DpushReleases=true -DallowSnapshots=true
+mvn jgitflow:release-start -DreleaseVersion=2.0.14 -DdevelopmentVersion=2.0.15-SNAPSHOT -DpushReleases=true -DallowSnapshots=true
 mvn jgitflow:release-finish -DnoReleaseBuild=true -DnoDeploy=true -DpushReleases=true
-
-
-
-
-git svn clone https://svn.gemantic.com/gemantic/trunk/gemantic-wealth/wealth-business-service/ --no-metadata --authors-file=users.txt --trunk=trunk wealth-business-service
-cd wealth-business-service
-git svn clone https://svn.gemantic.com/gemantic/trunk/gemantic-wealth/wealth-business-service --authors-file=users.txt --no-metadata .
-jgitflow:release-start
